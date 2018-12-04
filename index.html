@@ -40,7 +40,8 @@
 				var w = 0;
 				for (var i = 0; i <= trickLenght; i++) {
 					if (i % 2 < 1) {
-						trickster += charBlocks[1].charAt(Math.floor(Math.random() * worddLenght));
+						var s = Math.floor(Math.random() * symboLenght);
+						trickster += charBlocks[1].charAt(s);
 					} else {
 						trickster += charBlocks[0].charAt(w);
 						w++;
