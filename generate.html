@@ -7,13 +7,11 @@
 		<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 		<script type="text/javascript">
 			var charTypes = {
-				'upper': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-				'lower': 'abcdefghijklmnopqrstuvwxyz',
-				'number': '0123456789',
+				'word': 'Trickster',
 				'special': '!$%^&*()-=+[]{};#:@~,./<>?'
 			};
 
-			window.onload = function() { 
+			window.onload = function() {
 				var inputs = document.querySelectorAll('form div input[type=text]');
 				for (var i = 0; i < inputs.length; i++) {
 					var input = inputs[i];
@@ -33,39 +31,37 @@
 				}
 			}
 
-			function _generatePassword(passwordLength, charBlocks) {
-				var allChars = "";
-				for (var i = 0; i < charBlocks.length; i++) {
-					allChars += charBlocks[i];
-				}
-				var numChars = allChars.length;
-				var password = "";
-				for (var i = 1; i <= passwordLength; i++) {
-					password += allChars.charAt(Math.floor(Math.random() * numChars));
-				}
-				return password;
-			}
-
-			function generatePassword(passwordLength) {
-				var charBlocks = [];
-				for (id in charTypes) {
-					var isTicked = document.querySelector('div#' + id + ' input[type=checkbox]').checked;
-					var value = document.querySelector('div#' + id + ' input[type=text]').value;
-					if (isTicked) {
-						charBlocks.push(value);
+			function _generateTrickster(charBlocks) {
+				var trickster = "";
+				var trickLenght = charBlocks[0].length * 2 + 1;
+				var worddLenght = charBlocks[0].length;
+				var symboLenght = charBlocks[1].length;
+				var w = 0;
+				for (var i = 0; i <= trickLenght; i++) {
+					if (i % 2 < 1) {
+						trickster += charBlocks[1].charAt(Math.floor(Math.random() * worddLenght));
+					} else {
+						trickster += charBlocks[0].charAt(w);
+						w++;
 					}
 				}
-				
-				var $length = document.getElementById('length');
-				var passwordLength = parseInt($length.value)
-				
-				var password = _generatePassword(passwordLength, charBlocks);
-				var $display = document.getElementById('display-password');
-				$display.textContent  = password;
+				return trickster;
+			}
+
+			function generateTrickster() {
+				var charBlocks = [];
+				for (id in charTypes) {
+					var value = document.querySelector('div#' + id + ' input[type=text]').value;
+					charBlocks.push(value);
+				}
+
+				var trickster = _generateTrickster(charBlocks);
+				var $display = document.getElementById('display-trickster');
+				$display.textContent  = trickster;
 			}
 		</script>
 		<style type="text/css">
-			p#display-password {
+			p#display-trickster {
 				font-family: monospace;
 			}
 			p.disclaimer{
@@ -76,32 +72,22 @@
 	<body>
 		<div class="outer" title=" ">
 			<form>
-				<div id="upper">
-					<input type="checkbox" checked><input type="text">
-					<span>  <a href="#">reset</a></span>
-				</div>
-				<div id="lower">
-					<input type="checkbox" checked><input type="text">
-					<span>  <a href="#">reset</a></span>
-				</div>
-				<div id="number">
-					<input type="checkbox" checked><input type="text">
+				<div id="word">
+					<input type="text">
 					<span>  <a href="#">reset</a></span>
 				</div>
 				<div id="special">
-					<input type="checkbox" checked><input type="text">
+					<input type="text">
 					<span>  <a href="#">reset</a></span>
 				</div>
-				<br />
-				Length: <input id="length" type="text" value="50"><br />
-				<input type="submit" value="Generate" onclick="generatePassword(); return false;">
+				<input type="submit" value="Generate" onclick="generateTrickster(); return false;">
 			</form>
-			<p id="display-password"></p>
-			<button class="copy-button" data-clipboard-target="#display-password">
+			<p id="display-trickster"></p>
+			<button class="copy-button" data-clipboard-target="#display-trickster">
 				<i class="fa fa-clipboard" aria-hidden="true"></i>
 			</button>
 			<hr />
-			<p class="disclaimer">I am not responsible for anything bad that happens as a result of your use of this tool or its code. This tool is meant purely for education. Password security is an important and complex topic and you should not blindly trust some random page on the internet.</p>
+			<p class="disclaimer">Fuck the police.</p>
 		</div>
 		<script type="text/javascript">
 			var buttonSelector = '.copy-button';
@@ -112,7 +98,7 @@
 					of: buttonSelector
 				}
 			});
-				
+
 			function showTooltip(message) {
 				elem.tooltip("option", "content", message);
 				elem.tooltip("enable");
@@ -122,7 +108,7 @@
 					elem.tooltip("disable");
 				}, 2000)
 			}
-			
+
 			var clipboard = new Clipboard(buttonSelector);
 			clipboard.on('success', function(e) {
 				showTooltip("Copied.");
