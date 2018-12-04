@@ -34,16 +34,16 @@
 
 			function _generateTrickster(charBlocks) {
 				var trickster = "";
-				var trickLenght = charBlocks[0].length * 2 + 1;
+				var trickLenght = charBlocks[0].length * 2 - 1;
 				var worddLenght = charBlocks[0].length;
 				var symboLenght = charBlocks[1].length;
 				var w = 0;
-				for (var i = 0; i <= trickLenght; i++) {
+				for (var i = 0; i < trickLenght; i++) {
 					if (i % 2 < 1) {
+						trickster += charBlocks[0].charAt(w);
+					} else {
 						var s = Math.floor(Math.random() * symboLenght);
 						trickster += charBlocks[1].charAt(s);
-					} else {
-						trickster += charBlocks[0].charAt(w);
 						w++;
 					}
 				}
@@ -89,7 +89,7 @@
 				<i class="fa fa-clipboard" aria-hidden="true"></i>
 			</button>
 			<hr />
-			<p class="disclaimer">Fuck the police.</p>
+			<p class="disclaimer">Fuck the ordnungs-police.</p>
 		</div>
 		<script type="text/javascript">
 			var buttonSelector = '.copy-button';
